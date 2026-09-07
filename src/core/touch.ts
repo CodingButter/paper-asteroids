@@ -4,8 +4,8 @@ const RADIUS = 60; // base radius in CSS px
 const DEADZONE = 0.18;
 
 /**
- * Touch controls for phones. A thumbstick in the bottom-left corner sets heading
- * (direction) and throttle (how far it is pushed). A tap anywhere else fires.
+ * Touch controls for phones. A thumbstick in the bottom-left corner sets heading;
+ * dragging the thumb outside the ring engages full thrust. A tap anywhere else fires.
  * Enabled when the device reports a coarse pointer or the first touch arrives.
  */
 export function attachTouch(input: Input): void {
@@ -42,11 +42,13 @@ export function attachTouch(input: Input): void {
       dy *= RADIUS / len;
     }
     setKnob(dx, dy);
-    const throttle = Math.min(len / RADIUS, 1);
+    // Inside the ring: steer only. Push the thumb past the ring: full throttle.
+    const throttle = len > RADIUS ? 1 : 0;
+    stick.classList.toggle('thrust', throttle > 0);
     input.stick =
-      throttle < DEADZONE
+      len < RADIUS * DEADZONE
         ? { angle: input.stick?.angle ?? 0, throttle: 0 }
-        : { angle: Math.atan2(dx, -dy) * (180 / Math.PI), throttle: (throttle - DEADZONE) / (1 - DEADZONE) };
+        : { angle: Math.atan2(dx, -dy) * (180 / Math.PI), throttle };
   };
 
   stick.addEventListener('pointerdown', (e) => {
@@ -63,7 +65,7 @@ export function attachTouch(input: Input): void {
   const releaseStick = (e: PointerEvent) => {
     if (e.pointerId !== stickPointer) return;
     stickPointer = null;
-    stick.classList.remove('active');
+    stick.classList.remove('active', 'thrust');
     setKnob(0, 0);
     input.stick = null;
   };
