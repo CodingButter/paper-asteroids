@@ -21,6 +21,24 @@ export function attachTouch(input: Input): void {
   const knob = root.querySelector<HTMLDivElement>('.knob')!;
   const pauseBtn = root.querySelector<HTMLButtonElement>('.pause')!;
 
+  // iOS ignores user-scalable=no; kill double-tap and pinch zoom by hand so a
+  // fumbled tap on the stick can't zoom the page into an unrecoverable state.
+  const block = (e: Event) => e.preventDefault();
+  document.addEventListener('dblclick', block, { passive: false });
+  document.addEventListener('gesturestart', block, { passive: false });
+  document.addEventListener('gesturechange', block, { passive: false });
+  document.addEventListener('touchmove', (e) => e.touches.length > 1 && e.preventDefault(), { passive: false });
+  let lastTouchEnd = 0;
+  document.addEventListener(
+    'touchend',
+    (e) => {
+      const now = performance.now();
+      if (now - lastTouchEnd < 350) e.preventDefault();
+      lastTouchEnd = now;
+    },
+    { passive: false },
+  );
+
   const enable = () => document.body.classList.add('touch');
   if (matchMedia('(pointer: coarse)').matches) enable();
   window.addEventListener('touchstart', enable, { once: true, passive: true });

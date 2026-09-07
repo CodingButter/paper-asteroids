@@ -32,7 +32,8 @@ export class GameOverScene implements Scene {
       f.autocapitalize = 'characters';
       f.autocomplete = 'off';
       f.enterKeyHint = 'done';
-      f.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none;';
+      // 16px: anything smaller makes iOS zoom the page when the field takes focus.
+      f.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none;font-size:16px;';
       // Virtual keyboards don't give usable keydown events; read the value instead.
       f.addEventListener('input', () => {
         this.name = f.value.toUpperCase().replace(/[^A-Z0-9 ]/g, '').slice(0, MAX_NAME);

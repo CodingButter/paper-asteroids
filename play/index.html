@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no" />
     <meta name="mobile-web-app-capable" content="yes" />
     <title>Paper Asteroids</title>
     <link rel="icon" href="/favicon.ico" />
@@ -28,7 +28,7 @@
       #touch .pause {
         position: absolute; right: max(16px, env(safe-area-inset-right)); top: max(12px, env(safe-area-inset-top));
         width: 44px; height: 44px; border: 0; border-radius: 6px; font: bold 18px system-ui, sans-serif;
-        background: rgba(243, 240, 232, 0.85); color: #000; pointer-events: auto; touch-action: manipulation;
+        background: rgba(243, 240, 232, 0.85); color: #000; pointer-events: auto; touch-action: none;
       }
 
       /* Phones in portrait get a tiny letterboxed stage; ask for landscape. */
