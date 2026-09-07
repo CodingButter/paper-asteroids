@@ -22,6 +22,7 @@ html {
 
 body {
   margin: 0;
+  position: relative; /* the rocket layer spans the whole document */
   min-height: 100vh;
   color: var(--paper);
   font-family: Georgia, 'Times New Roman', serif;
@@ -55,6 +56,14 @@ body {
 .ufo.u2 { top: 78%; right: 22%; width: 6vw; --dur: 22s; --rot: 6deg; }
 
 /* the rocket that chases the cursor (driven by landing.ts) */
+/* Clips the rocket at the page edges so it can never widen the page on phones. */
+.rocket-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10;
+}
 .rocket {
   position: absolute;
   z-index: 10;
