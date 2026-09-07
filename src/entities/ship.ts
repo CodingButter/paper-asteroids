@@ -49,13 +49,11 @@ export class Ship {
     this.applyThrust(thrust ? 1 : 0);
   }
 
-  /** Thumbstick: turn toward `target` (degrees) at the normal rate, thrust by `throttle` (0..1). */
-  steerToward(target: number, throttle: number): void {
+  /** Thumbstick: rotate by `turn` (-1..1) of the normal rate, thrust by `throttle` (0..1). */
+  steerAnalog(turn: number, throttle: number): void {
     if (!this.canAct) return;
-    const diff = ((((target - this.angle + 180) % 360) + 360) % 360) - 180;
-    this.angle += Math.max(-ROT_SPEED, Math.min(ROT_SPEED, diff));
-    // Don't burn while still swinging the nose around; it feels like fighting the stick.
-    this.applyThrust(Math.abs(diff) < 60 ? throttle : 0);
+    this.angle += ROT_SPEED * turn;
+    this.applyThrust(throttle);
   }
 
   private applyThrust(throttle: number): void {

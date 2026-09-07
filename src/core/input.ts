@@ -15,9 +15,9 @@ const BINDINGS: Record<string, Action> = {
   KeyM: 'mute',
 };
 
-/** Analog heading + throttle from the touch thumbstick. Angle in degrees, 0 = up, clockwise. */
+/** Analog turn (-1 left .. 1 right) + throttle (0..1) from the touch thumbstick. */
 export interface Stick {
-  angle: number;
+  turn: number;
   throttle: number;
 }
 

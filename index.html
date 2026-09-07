@@ -36,22 +36,21 @@
           <span class="asteroids">ASTEROIDS</span>
         </h1>
         <p class="credit">Created by Jelly Sandwitch ltd &middot; 2009</p>
-        <a class="strip button" href="play/">PLAY NOW!</a>
+        <div class="hero-dedication">
+          <p class="dedication-label">For Dad &mdash; with love, Jamie</p>
+          <p class="hero-story">A game we made together.<br />A thank-you, seventeen years later.</p>
+          <p class="hero-intro">In 2009, my dad and I made a game out of paper and our own voices. I brought it back for him. This is our game, our story, and a letter to the person who helped me find what I love.</p>
+        </div>
+        <nav class="hero-actions" aria-label="Explore this page">
+          <a class="strip button story-button" href="#for-dad">Read the letter to Dad</a>
+          <a class="play-link" href="play/">Play the game <span aria-hidden="true">&rarr;</span></a>
+        </nav>
+        <a class="story-cue" href="#our-story">There&rsquo;s a story behind the paper <span aria-hidden="true">&darr;</span></a>
         <p class="hint">Arrows or WASD to fly &middot; Space to shoot &middot; Sound on, it matters</p>
         <p class="hint hint-touch">On a phone: turn it sideways, thumbstick to fly, tap anywhere to shoot</p>
       </header>
 
-      <section class="card scores">
-        <span class="tape tr"></span>
-        <div class="strip">
-          <h2>World high scores</h2>
-          <ol id="scores" class="score-list">
-            <li class="empty">Loading the board...</li>
-          </ol>
-        </div>
-      </section>
-
-      <section class="card story">
+      <section class="card story" id="our-story">
         <span class="tape tl"></span>
         <div class="strip">
         <h2>A desk, a microphone, and a lot of paper</h2>
@@ -76,7 +75,7 @@
         </div>
       </section>
 
-      <section class="card letter">
+      <section class="card letter" id="for-dad">
         <span class="tape tr"></span>
         <span class="tape bl"></span>
         <div class="strip">
@@ -133,6 +132,16 @@
           game long enough and you will hear him run out of air, take a breath, and start again.
           A person cannot make a rocket noise forever. We left it in.
         </p>
+        </div>
+      </section>
+
+      <section class="card scores">
+        <span class="tape tr"></span>
+        <div class="strip">
+          <h2>World high scores</h2>
+          <ol id="scores" class="score-list">
+            <li class="empty">Loading the board...</li>
+          </ol>
         </div>
       </section>
 

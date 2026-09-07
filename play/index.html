@@ -13,16 +13,19 @@
       /* Touch controls: hidden until a coarse pointer shows up (see core/touch.ts). */
       #touch { display: none; position: fixed; inset: 0; pointer-events: none; z-index: 5; }
       body.touch #touch { display: block; }
+      /* Rounded triangle, apex up. Knob rests at the bottom centre (see KNOB_INSET in core/touch.ts):
+         slide left/right to turn, push toward the apex to thrust. */
       #touch .stick {
         position: absolute; left: max(24px, env(safe-area-inset-left)); bottom: max(24px, env(safe-area-inset-bottom));
-        width: 120px; height: 120px; border-radius: 50%;
-        background: rgba(243, 240, 232, 0.18); border: 2px solid rgba(243, 240, 232, 0.55);
-        pointer-events: auto; touch-action: none;
+        width: 176px; height: 164px; pointer-events: auto; touch-action: none;
+        --pad-fill: rgba(243, 240, 232, 0.18); --pad-edge: rgba(243, 240, 232, 0.55);
       }
-      #touch .stick.active { background: rgba(243, 240, 232, 0.28); }
-      #touch .stick.thrust { border-color: #ff3b30; box-shadow: 0 0 18px rgba(255, 59, 48, 0.5); }
+      #touch .stick svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+      #touch .stick path { fill: var(--pad-fill); stroke: var(--pad-edge); stroke-width: 2; }
+      #touch .stick.active { --pad-fill: rgba(243, 240, 232, 0.28); }
+      #touch .stick.thrust { --pad-fill: rgba(255, 59, 48, 0.3); --pad-edge: #ff3b30; filter: drop-shadow(0 0 12px rgba(255, 59, 48, 0.5)); }
       #touch .knob {
-        position: absolute; left: 50%; top: 50%; width: 52px; height: 52px; margin: -26px 0 0 -26px; border-radius: 50%;
+        position: absolute; left: 50%; bottom: 36px; width: 52px; height: 52px; margin: 0 0 -26px -26px; border-radius: 50%;
         background: #f3f0e8; box-shadow: 4px 5px 6px rgba(0,0,0,0.6);
       }
       #touch .pause {

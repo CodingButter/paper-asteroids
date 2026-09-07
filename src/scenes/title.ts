@@ -50,7 +50,7 @@ export class TitleScene implements Scene {
     drawHint(
       r,
       document.body.classList.contains('touch')
-        ? 'Thumbstick to fly  ·  tap anywhere to shoot'
+        ? 'Slide left/right to turn, push up to thrust  ·  tap anywhere to shoot'
         : 'ARROWS / WASD to fly  ·  SPACE to shoot  ·  P pause  ·  M mute',
     );
   }
