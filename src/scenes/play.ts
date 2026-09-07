@@ -306,7 +306,8 @@ export class PlayScene implements Scene {
     if (this.rocks.length === 0) {
       r.text(`WAVE ${this.wave + 1}`, STAGE_W / 2, STAGE_H / 2 - 120, 48, { shadow: true });
     }
-    if (g.audio.muted) r.text('MUTED', STAGE_W - 50, 30, 21, { align: 'right', color: '#aaa' });
+    r.paperStrip(STAGE_W - 150, 32, 250, 38, 5);
+    r.text(g.audio.muted ? 'M: UNMUTE SOUND' : 'M: MUTE SOUND', STAGE_W - 150, 33, 21, { color: '#1a1a1a' });
 
     if (this.paused) {
       r.ctx.fillStyle = 'rgba(0,0,0,0.5)';
