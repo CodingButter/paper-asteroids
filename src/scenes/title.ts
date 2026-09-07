@@ -22,7 +22,12 @@ export class TitleScene implements Scene {
     this.g.renderer.canvas.onclick = null;
   }
 
+  private started = false;
+
   private startGame(): void {
+    // A tap arrives as both a canvas click and a touch "fire"; only start once.
+    if (this.started) return;
+    this.started = true;
     this.g.audio.unlock();
     this.g.setScene(new PlayScene(this.g));
   }
@@ -42,6 +47,11 @@ export class TitleScene implements Scene {
     drawButton(r, 'PLAY NOW!', STAGE_W / 2, STAGE_H / 2 - 40, this.t);
     drawHighScores(r, g.scores, STAGE_W / 2, STAGE_H / 1.6);
     drawBackButton(r);
-    drawHint(r, 'ARROWS / WASD to fly  ·  SPACE to shoot  ·  P pause  ·  M mute');
+    drawHint(
+      r,
+      document.body.classList.contains('touch')
+        ? 'Thumbstick to fly  ·  tap anywhere to shoot'
+        : 'ARROWS / WASD to fly  ·  SPACE to shoot  ·  P pause  ·  M mute',
+    );
   }
 }

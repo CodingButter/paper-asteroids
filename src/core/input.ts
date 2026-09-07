@@ -15,9 +15,17 @@ const BINDINGS: Record<string, Action> = {
   KeyM: 'mute',
 };
 
+/** Analog heading + throttle from the touch thumbstick. Angle in degrees, 0 = up, clockwise. */
+export interface Stick {
+  angle: number;
+  throttle: number;
+}
+
 export class Input {
   private down = new Set<Action>();
   private pressed = new Set<Action>();
+  /** Set by the touch layer while a finger is on the thumbstick; null otherwise. */
+  stick: Stick | null = null;
   /** Raw text typed this tick (for the high score name entry). */
   typed = '';
   backspace = false;
@@ -37,17 +45,27 @@ export class Input {
           return;
         }
       }
-      const a = BINDINGS[e.code];
+      // Virtual keyboards often report an empty e.code; fall back to e.key for Enter.
+      const a = BINDINGS[e.code] ?? (e.key === 'Enter' ? 'confirm' : undefined);
       if (!a) return;
       e.preventDefault();
-      if (!this.down.has(a)) this.pressed.add(a);
-      this.down.add(a);
+      this.press(a);
     });
     target.addEventListener('keyup', (e) => {
-      const a = BINDINGS[e.code];
-      if (a) this.down.delete(a);
+      const a = BINDINGS[e.code] ?? (e.key === 'Enter' ? 'confirm' : undefined);
+      if (a) this.release(a);
     });
     target.addEventListener('blur', () => this.down.clear());
+  }
+
+  /** Programmatic press (touch layer). */
+  press(a: Action): void {
+    if (!this.down.has(a)) this.pressed.add(a);
+    this.down.add(a);
+  }
+
+  release(a: Action): void {
+    this.down.delete(a);
   }
 
   setTextMode(on: boolean): void {

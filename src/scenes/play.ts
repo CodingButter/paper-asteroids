@@ -146,7 +146,8 @@ export class PlayScene implements Scene {
       return;
     }
 
-    ship.steer(input.isDown('left'), input.isDown('right'), input.isDown('thrust'));
+    if (input.stick) ship.steerToward(input.stick.angle, input.stick.throttle);
+    else ship.steer(input.isDown('left'), input.isDown('right'), input.isDown('thrust'));
     ship.update();
 
     if (ship.thrusting && !this.thrustPlaying) {

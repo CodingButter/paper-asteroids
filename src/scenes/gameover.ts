@@ -20,19 +20,42 @@ export class GameOverScene implements Scene {
     this.entering = g.scores.qualifies(score);
   }
 
+  private done = false;
+  /** Off-screen text field so phones can summon a keyboard for the name. */
+  private field: HTMLInputElement | null = null;
+
   enter(): void {
     this.g.input.setTextMode(this.entering);
+    if (this.entering) {
+      const f = document.createElement('input');
+      f.maxLength = MAX_NAME;
+      f.autocapitalize = 'characters';
+      f.autocomplete = 'off';
+      f.enterKeyHint = 'done';
+      f.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none;';
+      // Virtual keyboards don't give usable keydown events; read the value instead.
+      f.addEventListener('input', () => {
+        this.name = f.value.toUpperCase().replace(/[^A-Z0-9 ]/g, '').slice(0, MAX_NAME);
+      });
+      document.body.appendChild(f);
+      this.field = f;
+    }
     this.g.renderer.canvas.onclick = () => {
-      if (!this.entering) this.restart();
+      if (this.entering) this.field?.focus();
+      else this.restart();
     };
   }
 
   exit(): void {
     this.g.input.setTextMode(false);
     this.g.renderer.canvas.onclick = null;
+    this.field?.remove();
+    this.field = null;
   }
 
   private restart(): void {
+    if (this.done) return;
+    this.done = true;
     this.g.setScene(new PlayScene(this.g));
   }
 
@@ -46,6 +69,7 @@ export class GameOverScene implements Scene {
         this.g.scores.add(this.name.trim() || '?????', this.score);
         this.entering = false;
         input.setTextMode(false);
+        this.field?.blur();
       }
       return;
     }
@@ -69,13 +93,13 @@ export class GameOverScene implements Scene {
       r.text('Enter your name', cx, panelY + 15, 21, { color: '#000' });
       const cursor = (this.t >> 4) % 2 ? '_' : ' ';
       r.text(this.name + cursor, cx, panelY + 55, 32, { color: '#ff0000' });
-      drawHint(r, 'Type up to 5 letters, then press ENTER');
+      drawHint(r, document.body.classList.contains('touch') ? 'Tap the card to type your name, then press Done' : 'Type up to 5 letters, then press ENTER');
     } else {
       drawHighScores(r, g.scores, cx, panelY);
       if (!g.scores.entries.some((e) => e.score === this.score)) {
         r.text('TRY HARDER!', cx, panelY - 45, 32, { shadow: true });
       }
-      drawHint(r, 'SPACE / ENTER / click to play again');
+      drawHint(r, document.body.classList.contains('touch') ? 'Tap to play again' : 'SPACE / ENTER / click to play again');
     }
   }
 }

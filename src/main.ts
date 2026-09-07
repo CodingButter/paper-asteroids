@@ -2,6 +2,7 @@ import { loadFont, loadImages } from './core/assets';
 import { STAGE_H, STAGE_W } from './core/constants';
 import { Game } from './core/game';
 import { Renderer } from './core/renderer';
+import { attachTouch } from './core/touch';
 import { TitleScene } from './scenes/title';
 
 const canvas = document.getElementById('game') as HTMLCanvasElement;
@@ -22,5 +23,6 @@ drawLoading(0);
 const [images] = await Promise.all([loadImages((d, t) => drawLoading(d / t)), loadFont().catch(() => undefined)]);
 
 const game = new Game(canvas, images);
+attachTouch(game.input);
 game.setScene(new TitleScene(game));
 game.start();

@@ -38,6 +38,7 @@ me about how a rocket should turn, and letting a teenager drive.
 | Up, W          | Thrust              |
 | Space          | Fire                |
 | P              | Pause (Q to quit)   |
+| Phone          | Thumbstick to fly, tap to shoot (landscape) |
 | M              | Mute                |
 
 ## Development

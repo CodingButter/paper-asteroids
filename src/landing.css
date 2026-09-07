@@ -399,3 +399,8 @@ footer a {
   opacity: 1;
   scale: 1;
 }
+
+.hint-touch { display: none; }
+@media (pointer: coarse) {
+  .hint-touch { display: inline-block; }
+}

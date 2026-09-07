@@ -46,10 +46,23 @@ export class Ship {
     if (!this.canAct) return;
     if (right) this.angle += ROT_SPEED;
     if (left) this.angle -= ROT_SPEED;
-    this.thrusting = thrust;
-    if (thrust && this.speed < MAX_SPEED) {
-      this.vx += Math.sin(this.angle * DEG) * THRUST;
-      this.vy -= Math.cos(this.angle * DEG) * THRUST;
+    this.applyThrust(thrust ? 1 : 0);
+  }
+
+  /** Thumbstick: turn toward `target` (degrees) at the normal rate, thrust by `throttle` (0..1). */
+  steerToward(target: number, throttle: number): void {
+    if (!this.canAct) return;
+    const diff = ((((target - this.angle + 180) % 360) + 360) % 360) - 180;
+    this.angle += Math.max(-ROT_SPEED, Math.min(ROT_SPEED, diff));
+    // Don't burn while still swinging the nose around; it feels like fighting the stick.
+    this.applyThrust(Math.abs(diff) < 60 ? throttle : 0);
+  }
+
+  private applyThrust(throttle: number): void {
+    this.thrusting = throttle > 0;
+    if (this.thrusting && this.speed < MAX_SPEED) {
+      this.vx += Math.sin(this.angle * DEG) * THRUST * throttle;
+      this.vy -= Math.cos(this.angle * DEG) * THRUST * throttle;
     }
   }
 
