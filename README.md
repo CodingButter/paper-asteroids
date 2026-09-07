@@ -4,8 +4,9 @@
 
 ![Landing page](docs/landing.jpg)
 
-In 2009 my dad, Scott, and I built an Asteroids clone in Flash. I was in high
-school. We called ourselves Jelly Sandwitch ltd (Jamie + Scott, spelling
+My dad, Scott, and I had been making games together since I was about 14. In
+December 2009, when I was 20, we built this Asteroids clone in Flash over about
+ten days (the `.fla` metadata says Dec 1 to Dec 10). We called ourselves Jelly Sandwitch ltd (Jamie + Scott, spelling
 intentional). The whole thing is paper cutouts on a table: a rocket, some
 asteroids, a couple of UFOs, and a kid's imagination doing the rest.
 
@@ -18,7 +19,7 @@ The lasers, explosions, UFO warbles and the paper rips are all mouth noises too.
 Flash died, so in 2026 I decompiled the original `.fla`, ported the game to
 TypeScript and Canvas, and built the dedication page around it. This repo is a
 thank-you to my dad for the hours he spent teaching me to program, arguing with
-me about how a rocket should turn, and letting a teenager drive.
+me about how a rocket should turn, and letting me drive.
 
 ![Gameplay](docs/gameplay.jpg)
 
