@@ -3,16 +3,143 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Paper Asteroids</title>
+    <title>Paper Asteroids, for Dad</title>
+    <meta
+      name="description"
+      content="A paper-cutout Asteroids that a father and son made together in 2009, rebuilt for the browser. With a thank-you."
+    />
     <link rel="icon" href="/favicon.ico" />
-    <style>
-      html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
-      canvas { display: block; margin: 0 auto; image-rendering: auto; }
-      #ui { position: fixed; inset: 0; pointer-events: none; }
-    </style>
+    <link rel="stylesheet" href="/src/landing.css" />
   </head>
   <body>
-    <canvas id="game"></canvas>
-    <script type="module" src="/src/main.ts"></script>
+    <div class="sky" aria-hidden="true">
+      <img class="cutout planet p1" src="/img/asteroid1.png" alt="" />
+      <img class="cutout planet p2" src="/img/asteroid3.png" alt="" />
+      <img class="cutout planet p3" src="/img/asteroid2.png" alt="" />
+      <img class="cutout rock r1" src="/img/asteroid4.png" alt="" />
+      <img class="cutout ufo u1" src="/img/ufo-big.png" alt="" />
+      <img class="cutout ufo u2" src="/img/ufo-small.png" alt="" />
+    </div>
+    <div class="rocket" id="rocket" aria-hidden="true">
+      <img class="flame" src="/img/flame.png" alt="" />
+      <img src="/img/ship.png" alt="" />
+      <span class="bubble" id="bubble"></span>
+    </div>
+
+    <main>
+      <header class="hero">
+        <p class="kicker">paperGAMES <span>presents</span></p>
+        <h1 class="title">
+          <span class="paper">PAPER</span>
+          <span class="asteroids">ASTEROIDS</span>
+        </h1>
+        <p class="credit">Created by Jelly Sandwitch ltd &middot; 2009</p>
+        <a class="strip button" href="play/">PLAY NOW!</a>
+        <p class="hint">Arrows or WASD to fly &middot; Space to shoot &middot; Sound on, it matters</p>
+      </header>
+
+      <section class="card scores">
+        <span class="tape tr"></span>
+        <div class="strip">
+          <h2>World high scores</h2>
+          <ol id="scores" class="score-list">
+            <li class="empty">Loading the board...</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="card story">
+        <span class="tape tl"></span>
+        <div class="strip">
+        <h2>A kitchen table, a microphone, and a lot of paper</h2>
+        <p>
+          When I was in high school my dad and I sat down and made this game together in Flash.
+          The name on the credits, <em>Jelly Sandwitch</em>, is the two of us squashed into one word:
+          <strong>Ja</strong>mie and <strong>Sco</strong>tt.
+        </p>
+        <p>
+          The idea was simple: it should feel like a kid at a desk, pushing paper cutouts around
+          and making the noises with his mouth. So that is exactly what we did. Every sound in this
+          game is one of us. The rocket thrust is my dad. The heartbeat that speeds up as you clear
+          the screen is the two of us each saying <em>"hum"</em> into a microphone, taking turns.
+          The ships, the explosions, the rips of paper. All us.
+        </p>
+        <p>
+          The original Flash file sat untouched for seventeen years. In 2026 I dug it out,
+          decompiled it, and rebuilt it to run in any browser, with the same physics numbers, the
+          same art, and the same voices. Now it lives here, and now there is a world leaderboard.
+        </p>
+        </div>
+      </section>
+
+      <section class="card letter">
+        <span class="tape tr"></span>
+        <span class="tape bl"></span>
+        <div class="strip">
+        <h2>For Dad</h2>
+        <p>
+          I had so much fun making this with you. I remember it as one of the best times of my
+          life, and I want you to know that I have never forgotten it.
+        </p>
+        <p>
+          Thank you for the hours. For sitting next to me while I figured out why the ship would
+          not turn, for recording rocket noises with a straight face, for coming back the next
+          evening and the one after that. We bumped heads plenty (we always have) and you never
+          once stopped showing up. That is the part I think about most now.
+        </p>
+        <p>
+          You took a kid who was curious and gave him a reason to keep going. Because you spent
+          that time growing my interest in programming, I get to do what I love every single day.
+          The skills, the stubbornness, the habit of sitting with a hard problem until it gives:
+          all of that started at that table with you. Everything I have built since is built on
+          it.
+        </p>
+        <p>
+          It was a priceless time in my life. Thank you for always being there for me. This one is
+          yours.
+        </p>
+        <p class="sign">Love, Jamie</p>
+        </div>
+      </section>
+
+      <section class="card hums">
+        <span class="tape tl"></span>
+        <div class="strip">
+        <h2>Every sound is us</h2>
+        <p>
+          No sound library. Two people, one microphone, and whatever noises we could make with our
+          mouths. Press them.
+        </p>
+        <div class="hum-row">
+          <button class="strip hum" data-src="sfx/jamHum.mp3" type="button">Jamie's hum</button>
+          <button class="strip hum" data-src="sfx/scoHum.mp3" type="button">Scott's hum</button>
+          <button class="strip hum" data-src="sfx/thrust.mp3" type="button">Rocket</button>
+          <button class="strip hum" data-src="sfx/shooter.mp3" type="button">Pew</button>
+          <button class="strip hum" data-src="sfx/esplosion.mp3" type="button">Explosion</button>
+          <button class="strip hum" data-src="sfx/enemyHigh.mp3" type="button">Little UFO</button>
+          <button class="strip hum" data-src="sfx/enemyLow.mp3" type="button">Big UFO</button>
+          <button class="strip hum" data-src="sfx/lilRip.mp3" type="button">Little rip</button>
+          <button class="strip hum" data-src="sfx/midRip.mp3" type="button">Mid rip</button>
+          <button class="strip hum" data-src="sfx/bigRip.mp3" type="button">Big rip</button>
+        </div>
+        <p class="note">
+          The two hums are the heartbeat: they alternate, and speed up as the field clears. The
+          rocket is my dad going <em>shhhhhhhh</em> for as long as he could. Hold the thrust in the
+          game long enough and you will hear him run out of air, take a breath, and start again.
+          A person cannot make a rocket noise forever. We left it in.
+        </p>
+        </div>
+      </section>
+
+      <footer>
+        <a class="strip button small" href="play/">PLAY NOW!</a>
+        <p>
+          <a href="https://github.com/CodingButter/paper-asteroids">Source on GitHub</a> &middot;
+          the original 2009 SWF is in the repo &middot; Jelly Sandwitch ltd
+        </p>
+      </footer>
+    </main>
+
+    <script type="module" src="/src/landing.ts"></script>
   </body>
 </html>

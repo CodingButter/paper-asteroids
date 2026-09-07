@@ -2,7 +2,7 @@ import { STAGE_H, STAGE_W } from '../core/constants';
 import type { Game, Scene } from '../core/game';
 import { spawnField, type Asteroid } from '../entities/asteroid';
 import { PlayScene } from './play';
-import { drawBackground, drawButton, drawHighScores, drawHint, drawTitle } from './ui';
+import { drawBackButton, drawBackground, drawButton, drawHighScores, drawHint, drawTitle, inBackButton } from './ui';
 
 export class TitleScene implements Scene {
   private rocks: Asteroid[] = [];
@@ -12,7 +12,10 @@ export class TitleScene implements Scene {
 
   enter(): void {
     this.rocks = spawnField(4);
-    this.g.renderer.canvas.onclick = () => this.startGame();
+    this.g.renderer.canvas.onclick = (e) => {
+      if (inBackButton(this.g.renderer.toStage(e))) location.href = import.meta.env.BASE_URL;
+      else this.startGame();
+    };
   }
 
   exit(): void {
@@ -38,6 +41,7 @@ export class TitleScene implements Scene {
     drawTitle(r, STAGE_W / 2, 135);
     drawButton(r, 'PLAY NOW!', STAGE_W / 2, STAGE_H / 2 - 40, this.t);
     drawHighScores(r, g.scores, STAGE_W / 2, STAGE_H / 1.6);
+    drawBackButton(r);
     drawHint(r, 'ARROWS / WASD to fly  ·  SPACE to shoot  ·  P pause  ·  M mute');
   }
 }

@@ -45,3 +45,23 @@ export function drawHint(r: Renderer, str: string): void {
   c.fillText(str, STAGE_W / 2, STAGE_H - 24);
   c.restore();
 }
+
+/** Quiet "back to the dedication page" link, centred just above the control hints. */
+export const BACK_RECT = { x: STAGE_W / 2 - 90, y: STAGE_H - 66, w: 180, h: 28 };
+export function drawBackButton(r: Renderer): void {
+  const c = r.ctx;
+  c.save();
+  c.font = '16px system-ui, sans-serif';
+  c.fillStyle = '#ddd';
+  c.textAlign = 'center';
+  c.textBaseline = 'middle';
+  const cx = BACK_RECT.x + BACK_RECT.w / 2;
+  const cy = BACK_RECT.y + BACK_RECT.h / 2;
+  c.fillText('Back to the story', cx, cy);
+  c.fillRect(cx - 58, cy + 10, 116, 1);
+  c.restore();
+}
+export function inBackButton(p: { x: number; y: number }): boolean {
+  const { x, y, w, h } = BACK_RECT;
+  return p.x >= x && p.x <= x + w && p.y >= y && p.y <= y + h;
+}

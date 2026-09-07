@@ -26,6 +26,12 @@ export class Renderer {
     this.canvas.height = Math.floor(h * dpr);
   }
 
+  /** Convert a mouse event's position into logical stage coordinates. */
+  toStage(e: MouseEvent): { x: number; y: number } {
+    const rect = this.canvas.getBoundingClientRect();
+    return { x: (e.clientX - rect.left) / this.scale, y: (e.clientY - rect.top) / this.scale };
+  }
+
   /** Apply the stage->canvas transform. Call at the start of every frame. */
   begin(): void {
     const dpr = window.devicePixelRatio || 1;

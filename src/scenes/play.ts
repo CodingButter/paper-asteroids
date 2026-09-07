@@ -56,10 +56,30 @@ export class PlayScene implements Scene {
 
   enter(): void {
     this.newWave();
+    this.g.renderer.canvas.onclick = (e) => this.onClick(e);
   }
 
   exit(): void {
     this.g.audio.stopAllLoops();
+    this.g.renderer.canvas.onclick = null;
+  }
+
+  /** Pause menu layout (stage coords). */
+  private static readonly RESUME_Y = STAGE_H / 2 + 10;
+  private static readonly QUIT_Y = STAGE_H / 2 + 70;
+
+  private onClick(e: MouseEvent): void {
+    if (!this.paused) return;
+    const { x, y } = this.g.renderer.toStage(e);
+    if (Math.abs(x - STAGE_W / 2) > 130) return;
+    if (Math.abs(y - PlayScene.RESUME_Y) < 22) this.paused = false;
+    else if (Math.abs(y - PlayScene.QUIT_Y) < 22) this.quit();
+  }
+
+  /** Leave the game and go back to the dedication page. */
+  private quit(): void {
+    this.g.audio.stopAllLoops();
+    location.href = import.meta.env.BASE_URL;
   }
 
   private newWave(): void {
@@ -77,7 +97,10 @@ export class PlayScene implements Scene {
       this.paused = !this.paused;
       if (this.paused) this.stopThrust();
     }
-    if (this.paused) return;
+    if (this.paused) {
+      if (input.justPressed('quit')) this.quit();
+      return;
+    }
 
     this.updateShip();
     this.updateEnemy();
@@ -287,8 +310,11 @@ export class PlayScene implements Scene {
     if (this.paused) {
       r.ctx.fillStyle = 'rgba(0,0,0,0.5)';
       r.ctx.fillRect(0, 0, STAGE_W, STAGE_H);
-      r.paperStrip(STAGE_W / 2, STAGE_H / 2, 260, 44, 11);
-      r.text('PAUSED', STAGE_W / 2, STAGE_H / 2 + 2, 36, { color: '#ff0000' });
+      r.text('PAUSED', STAGE_W / 2, STAGE_H / 2 - 70, 48, { shadow: true });
+      r.paperStrip(STAGE_W / 2, PlayScene.RESUME_Y, 260, 44, 11);
+      r.text('RESUME  (P)', STAGE_W / 2, PlayScene.RESUME_Y + 2, 30, { color: '#000' });
+      r.paperStrip(STAGE_W / 2, PlayScene.QUIT_Y, 260, 44, 4);
+      r.text('QUIT  (Q)', STAGE_W / 2, PlayScene.QUIT_Y + 2, 30, { color: '#ff0000' });
     }
   }
 }

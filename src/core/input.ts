@@ -1,4 +1,4 @@
-export type Action = 'left' | 'right' | 'thrust' | 'fire' | 'pause' | 'confirm' | 'mute';
+export type Action = 'left' | 'right' | 'thrust' | 'fire' | 'pause' | 'confirm' | 'mute' | 'quit';
 
 const BINDINGS: Record<string, Action> = {
   ArrowLeft: 'left',
@@ -10,6 +10,7 @@ const BINDINGS: Record<string, Action> = {
   Space: 'fire',
   Escape: 'pause',
   KeyP: 'pause',
+  KeyQ: 'quit',
   Enter: 'confirm',
   KeyM: 'mute',
 };
