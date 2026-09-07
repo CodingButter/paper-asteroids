@@ -6,7 +6,7 @@
 
 In 2009 my dad, Scott, and I built an Asteroids clone in Flash. I was in high
 school. We called ourselves Jelly Sandwitch ltd (Jamie + Scott, spelling
-intentional). The whole thing is paper cutouts on a desk: a rocket, some
+intentional). The whole thing is paper cutouts on a table: a rocket, some
 asteroids, a couple of UFOs, and a kid's imagination doing the rest.
 
 Every sound in the game is one of us. The heartbeat that speeds up as the field
