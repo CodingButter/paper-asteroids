@@ -1,0 +1,8 @@
+node_modules
+dist
+.neon
+.env.local
+.env
+.playwright-mcp
+decompiled
+*.png.tmp
